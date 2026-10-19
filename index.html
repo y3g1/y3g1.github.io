@@ -4,194 +4,135 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yelnur Abdikhaimov — Penetration Tester</title>
+<meta name="description" content="Penetration tester. Enterprise Active Directory, web/API. Remote from Astana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#07090d; --panel:#0d1117; --panel2:#11161d; --line:#1d2530;
-    --txt:#e6edf3; --mut:#8b949e; --acc:#58a6ff; --acc2:#3fb950; --red:#f85149;
-    --code:#161b22; --mono:ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--txt);font:16px/1.65 -apple-system,'Segoe UI',Roboto,Inter,sans-serif;-webkit-font-smoothing:antialiased}
-  a{color:var(--acc);text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+:root{
+  --bg:#0a0a0b; --fg:#e7e7ea; --dim:#9b9ba4; --faint:#5c5c66;
+  --line:#1e1e22; --accent:#4ade80;
+  --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(74,222,128,.22)}
+.wrap{max-width:660px;margin:0 auto;padding:0 24px}
 
-  /* hero */
-  .hero{padding:88px 0 64px;border-bottom:1px solid var(--line);
-    background:radial-gradient(1200px 500px at 70% -10%,rgba(88,166,255,.08),transparent 60%)}
-  .hero .status{display:inline-flex;align-items:center;gap:8px;font:13px var(--mono);
-    color:var(--acc2);border:1px solid rgba(63,185,80,.35);background:rgba(63,185,80,.07);
-    padding:4px 12px;border-radius:99px;margin-bottom:22px}
-  .hero .status .dot{width:7px;height:7px;border-radius:50%;background:var(--acc2);
-    animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  h1{font-size:44px;line-height:1.15;letter-spacing:-.02em;font-weight:800}
-  h1 .role{background:linear-gradient(90deg,var(--acc),#a371f7);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero p.sub{color:var(--mut);margin-top:14px;max-width:640px;font-size:17px}
-  .hero .ctas{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;
-    font-size:14px;font-weight:600;border:1px solid var(--line);color:var(--txt);transition:.18s}
-  .btn:hover{text-decoration:none;border-color:var(--acc);transform:translateY(-1px)}
-  .btn.pri{background:var(--acc);border-color:var(--acc);color:#04131f}
-  .btn.pri:hover{background:#79b8ff}
+/* faint grid backdrop */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;opacity:.14;
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 20%,transparent 75%);
+          mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 20%,transparent 75%)}
+main{position:relative;z-index:1}
 
-  /* stats */
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:40px 0 0}
-  .stat{background:var(--panel);padding:20px 22px}
-  .stat b{display:block;font-size:28px;letter-spacing:-.02em;color:var(--txt)}
-  .stat span{color:var(--mut);font-size:13px}
+/* ---------- hero ---------- */
+header{padding:96px 0 64px}
+.status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--accent);
+  border:1px solid rgba(74,222,128,.25);border-radius:999px;padding:5px 12px;margin-bottom:28px;
+  background:rgba(74,222,128,.05)}
+.status .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 0 rgba(74,222,128,.5);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.45)}70%{box-shadow:0 0 0 7px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+h1{font-size:clamp(30px,5.4vw,44px);font-weight:600;letter-spacing:-.02em;line-height:1.12}
+h1 .amp{color:var(--dim);font-weight:400}
+.role{margin-top:14px;font-size:clamp(17px,2.4vw,20px);color:var(--dim);max-width:36ch}
+.role em{font-style:normal;color:var(--fg)}
 
-  /* sections */
-  section{padding:56px 0;border-bottom:1px solid var(--line)}
-  h2{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--acc);margin-bottom:26px;font-family:var(--mono)}
-  h2 .n{color:var(--mut);margin-right:10px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:14px}
-  .card h3{font-size:17px;margin-bottom:6px}
-  .card .meta{color:var(--mut);font-size:13px;margin-bottom:10px}
-  ul{list-style:none}
-  .card li{padding-left:20px;position:relative;color:#c9d1d9;margin:7px 0;font-size:15px}
-  .card li::before{content:'▸';position:absolute;left:0;color:var(--acc)}
+/* ---------- sections ---------- */
+section{padding:26px 0;border-top:1px solid var(--line)}
+h2{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:22px}
+h2 .idx{color:var(--accent);margin-right:10px}
+p{color:var(--dim)}
+p strong{color:var(--fg);font-weight:500}
+.about p+p{margin-top:14px}
 
-  /* certs */
-  .certs{display:flex;flex-wrap:wrap;gap:10px}
-  .cert{background:var(--panel);border:1px solid var(--line);border-radius:10px;
-    padding:12px 16px;font-size:14px}
-  .cert b{display:block;font-size:15px}
-  .cert span{color:var(--mut);font-size:12px}
+/* ---------- work cards ---------- */
+.card{display:block;text-decoration:none;border:1px solid var(--line);border-radius:10px;
+  padding:20px 22px;margin-bottom:14px;position:relative;
+  background:linear-gradient(180deg,rgba(255,255,255,.015),transparent);
+  transition:border-color .2s ease, transform .2s ease}
+.card:hover{border-color:rgba(74,222,128,.35);transform:translateY(-1px)}
+.card .tag{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.06em;margin-bottom:8px}
+.card h3{font-size:16.5px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;color:var(--fg)}
+.card p{font-size:14.5px;line-height:1.55}
+.card .go{position:absolute;top:22px;right:20px;color:var(--faint);font-family:var(--mono);font-size:14px;
+  transition:color .2s,transform .2s}
+.card:hover .go{color:var(--accent);transform:translate(2px,-2px)}
 
-  /* writeups */
-  .wu{display:flex;justify-content:space-between;align-items:center;gap:16px;
-    background:var(--panel);border:1px solid var(--line);border-radius:10px;
-    padding:14px 18px;margin-bottom:10px}
-  .wu b{font-size:15px}
-  .wu .tags{display:flex;gap:6px;flex-wrap:wrap}
-  .tag{font:12px var(--mono);color:var(--mut);border:1px solid var(--line);
-    padding:2px 8px;border-radius:6px}
+/* ---------- now ---------- */
+.now ul{list-style:none}
+.now li{padding:9px 0;border-bottom:1px dashed var(--line);color:var(--dim);font-size:15px;display:flex;gap:12px;align-items:baseline}
+.now li:last-child{border-bottom:none}
+.now li::before{content:"▸";color:var(--accent);font-family:var(--mono);flex:0 0 auto;opacity:.8}
+.now .m{font-family:var(--mono);font-size:13px;color:var(--faint);flex:0 0 84px}
 
-  /* tools table */
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line)}
-  th{color:var(--mut);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-family:var(--mono)}
-  td b{color:var(--txt)}
-  td{color:#c9d1d9}
-
-  /* contact */
-  #contact .big{font-size:22px;font-weight:700;margin-bottom:8px}
-  #contact .mail{font:18px var(--mono);color:var(--acc)}
-  footer{padding:34px 0;color:var(--mut);font-size:13px;display:flex;
-    justify-content:space-between;flex-wrap:wrap;gap:10px}
-
-  @media(max-width:720px){
-    .stats{grid-template-columns:repeat(2,1fr)}
-    h1{font-size:34px}
-    .wu{flex-direction:column;align-items:flex-start}
-  }
+/* ---------- contact ---------- */
+footer{padding:30px 0 72px}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{font-family:var(--mono);font-size:13px;color:var(--dim);text-decoration:none;
+  border:1px solid var(--line);border-radius:8px;padding:9px 15px;transition:all .2s ease}
+.links a:hover{color:var(--accent);border-color:rgba(74,222,128,.4)}
+.links a .at{color:var(--faint)}
+.finenote{margin-top:26px;font-family:var(--mono);font-size:12px;color:var(--faint)}
+@media (max-width:480px){header{padding:64px 0 44px}}
 </style>
 </head>
 <body>
+<main class="wrap">
 
-<div class="hero">
-  <div class="wrap">
-    <div class="status"><span class="dot"></span>Open to remote pentest / red team roles</div>
-    <h1>Yelnur Abdikhaimov<br><span class="role">Penetration Tester</span></h1>
-    <p class="sub">Active Directory attacks, web exploitation and custom red-team tooling.
-      2.5+ years in cybersecurity, 16 authorized client engagements,
-      full AD domain compromise in 15 of 16 assessments.</p>
-    <div class="ctas">
-      <a class="btn pri" href="mailto:eabdikhaimov@gmail.com">Hire me</a>
-      <a class="btn" href="https://app.hackthebox.com/users/2367007" target="_blank">HTB Profile</a>
-      <a class="btn" href="https://github.com/y3g1" target="_blank">GitHub</a>
-      <a class="btn" href="https://www.linkedin.com/in/yelnur-abdikhaimov-0007b52b3" target="_blank">LinkedIn</a>
-    </div>
- <div class="stats">
-      <div class="stat"><b>14/15</b><span>full AD domain compromise</span></div>
-      <div class="stat"><b>118+</b><span>findings (28 Critical / 49 High)</span></div>
-      <div class="stat"><b>20</b><span>HTB certs incl. CPTS &amp; CWES</span></div>
-      <div class="stat"><b>20+</b><span>custom Python attack tools</span></div>
-    </div>
-  </div>
-</div>
+<header>
+  <div class="status"><span class="dot"></span>open to remote roles · utc+5</div>
+  <h1>Yelnur Abdikhaimov<span class="amp"> — </span><br>penetration tester</h1>
+  <p class="role">Enterprise <em>Active Directory</em> is my main field — ESC chains, Shadow&nbsp;Credentials, RBCD, Kerberoasting, NTLM relay. Full domain compromise is how my internal engagements usually end.</p>
+</header>
 
-<section id="experience">
-  <div class="wrap">
-    <h2><span class="n">01</span>Experience</h2>
-    <div class="card">
-      <h3>Security Operations Center Analyst / Penetration Tester — Digital Qalqan</h3>
-      <div class="meta">Astana · May 2024 – Present</div>
-      <ul>
-        <li>16 authorized grey/black-box penetration tests (fintech, government, industrial) — full AD domain compromise in 15 engagements, from unprivileged VPN access to Domain Admin</li>
-        <li>118+ vulnerabilities documented: 28 Critical, 49 High (max CVSS 10.0), including full-domain chains via AD CS attacks (ESC6/ESC8, cert template abuse, Certighost CVE-2026-54121), Shadow Credentials, RBCD+S4U2Proxy, Kerberoasting, NTLM relay</li>
-        <li>EDR evasion in authorized tests: UPX-packed Mimikatz past Snort signatures, alternative LDAP tooling past Kaspersky DNS-signatures; honest stop conditions vs CrowdStrike</li>
-        <li>15 client-facing reports (up to 74 pages, TLP:RED): executive summary, MITRE ATT&CK kill chains, remediation roadmap; retest validation</li>
-        <li>Built 20+ custom Python attack tools with verifiable development history (GhostSPN full-chain automation CVE-2025-58726, DRSUAPI DCSync diagnostics, NBT-relay proxy, GPO DACL audit, lockout-aware password spray)</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Cybersecurity Intern — KAP Technology LLP</h3>
-      <div class="meta">Mar – May 2024 · internal CTF platform on CTFd</div>
-    </div>
-  </div>
+<section class="about">
+  <h2><span class="idx">00</span>about</h2>
+  <p>I came to offensive security from the blue side — two years in a SOC (L1→L2) before going full-time pentester. I know what defenders see in their telemetry, and what they don't.</p>
+  <p>My reports are written to be fixed: reproducible findings, kill chains mapped to MITRE ATT&amp;CK, remediation a SOC can implement. I build my own Python tooling when public tools aren't enough — the two that survived real engagements are public below.</p>
 </section>
 
-<section id="certs">
-  <div class="wrap">
-    <h2><span class="n">02</span>Certifications</h2>
-    <div class="certs">
-      <div class="cert"><b>CPTS</b><span>HTB Certified Penetration Testing Specialist</span></div>
-      <div class="cert"><b>CWES</b><span>HTB Certified Web Exploitation Specialist · 100/100</span></div>
-        <div class="cert"><b>CRTeamer</b><span>Certified Red Team Analyst — SecOps Group</span></div>
-      <div class="cert"><b>7 × SecOps</b><span>Web-RTA · CAPen · CNPen · CAP · CCSP-AWS · CNSP · CBP</span></div>
-      <div class="cert"><b>CEH</b><span>Certified Ethical Hacker</span></div>
-      <div class="cert"><b>18 Pro Labs</b><span>HTB: Dante, POO, Hades, …</span></div>
-    </div>
-  </div>
+<section>
+  <h2><span class="idx">01</span>public work</h2>
+
+  <a class="card" href="https://github.com/y3g1/SyncLAPS" target="_blank" rel="noopener">
+    <div class="tag">active-directory · python</div>
+    <h3>SyncLAPS</h3>
+    <p>Extract LAPS passwords through the LDAP DirSync control — Schannel certificate auth over StartTLS, no PKINIT, no LDAPS. Survived a real engagement where louder paths were monitored.</p>
+    <span class="go">↗</span>
+  </a>
+
+  <a class="card" href="https://github.com/y3g1/CraftCMS-CVE-2026-79987" target="_blank" rel="noopener">
+    <div class="tag">exploit · cve-2026-79987</div>
+    <h3>Craft CMS RCE — independent PoC</h3>
+    <p>First public exploit for CVE-2026-79987, written from patch analysis: parameterized exploit, time-based save-action oracle, and a docker lab that reproduces the whole chain end-to-end.</p>
+    <span class="go">↗</span>
+  </a>
 </section>
 
-<section id="writeups">
-  <div class="wrap">
-    <h2><span class="n">03</span>Research &amp; Write-ups</h2>
-    <div class="wu">
-      <div><b>CraftCMS CVE-2026-79987 — RCE</b><div class="meta">Parameterized exploit, exact vulnerable range 5.9.0–5.10.12, docker lab + end-to-end PROOF</div></div>
-      <div class="tags"><span class="tag">CVE</span><span class="tag">RCE</span><span class="tag">PHP</span></div>
-    </div>
-    <div class="wu">
-      <div><b>SyncLAPS — LAPS password synchronization abuse</b><div class="meta">AD attack tooling, battle-tested on authorized engagements</div></div>
-      <div class="tags"><span class="tag">Active Directory</span><span class="tag">LAPS</span><span class="tag">Python</span></div>
-    </div>
-    <div class="wu">
-      <i>Write-ups for GhostSPN (CVE-2025-58726) and the NTLM-relay toolkit — after public repo release.</i>
-    </div>
-  </div>
-</section>
-
-<section id="tools">
-  <div class="wrap">
-    <h2><span class="n">04</span>Tooling</h2>
-    <table>
-      <tr><th>Domain</th><th>What I use</th></tr>
-      <tr><td><b>Active Directory</b></td><td>BloodHound, Impacket, NetExec, Certipy, Mimikatz, ntlmrelayx, bloodyAD</td></tr>
-      <tr><td><b>Web</b></td><td>Burp Suite, Nmap, sqlmap, custom Python exploit skeletons</td></tr>
-      <tr><td><b>C2 / Red Team</b></td><td>AdaptixC2 (custom agents), MITRE ATT&CK, custom loaders (authorized labs)</td></tr>
-      <tr><td><b>Languages</b></td><td>Python, Bash · Kazakh/Russian native, English B2+/C1 tech</td></tr>
-    </table>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap">
-    <h2><span class="n">05</span>Contact</h2>
-    <p class="big">Looking for a remote pentest / red team role.</p>
-    <p><span class="mail">eabdikhaimov@gmail.com</span> · UTC+5, remote-friendly</p>
-  </div>
+<section class="now">
+  <h2><span class="idx">02</span>these days</h2>
+  <ul>
+    <li><span class="m">htb</span>Pro Hacker — Holo tier 26/26 flags two seasons in a row (S10 #292 · S11 #387); 18 Pro Labs</li>
+    <li><span class="m">certs</span>CPTS · CWES 100/100 · CRTeamer · Web-RTA · +6 The SecOps Group (CAPen, CNPen, CAP, CCSP-AWS, CNSP, CBP)</li>
+    <li><span class="m">now</span>working through HTB CAPE — AD Pentesting Expert path</li>
+  </ul>
 </section>
 
 <footer>
-  <div>© 2026 Yelnur Abdikhaimov</div>
-  <div>All engagements referenced were authorized under contract.</div>
+  <h2><span class="idx">03</span>contact</h2>
+  <div class="links">
+    <a href="mailto:eabdikhaimov@gmail.com">eabdikhaimov<span class="at">@</span>gmail.com</a>
+    <a href="https://github.com/y3g1" target="_blank" rel="noopener">github<span class="at">/</span>y3g1</a>
+    <a href="https://www.linkedin.com/in/yelnur-abdikhaimov-0007b52b3" target="_blank" rel="noopener">linkedin<span class="at">/</span>yelnur</a>
+    <a href="https://app.hackthebox.com/users/2367007" target="_blank" rel="noopener">hackthebox<span class="at">/</span>yeg1</a>
+  </div>
+  <p class="finenote">// static html · no js · no tracking — astana, utc+5</p>
 </footer>
 
+</main>
 </body>
 </html>
