@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yelnur Abdikhaimov — Penetration Tester</title>
+<style>
+  :root{
+    --bg:#07090d; --panel:#0d1117; --panel2:#11161d; --line:#1d2530;
+    --txt:#e6edf3; --mut:#8b949e; --acc:#58a6ff; --acc2:#3fb950; --red:#f85149;
+    --code:#161b22; --mono:ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);font:16px/1.65 -apple-system,'Segoe UI',Roboto,Inter,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--acc);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+  /* hero */
+  .hero{padding:88px 0 64px;border-bottom:1px solid var(--line);
+    background:radial-gradient(1200px 500px at 70% -10%,rgba(88,166,255,.08),transparent 60%)}
+  .hero .status{display:inline-flex;align-items:center;gap:8px;font:13px var(--mono);
+    color:var(--acc2);border:1px solid rgba(63,185,80,.35);background:rgba(63,185,80,.07);
+    padding:4px 12px;border-radius:99px;margin-bottom:22px}
+  .hero .status .dot{width:7px;height:7px;border-radius:50%;background:var(--acc2);
+    animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  h1{font-size:44px;line-height:1.15;letter-spacing:-.02em;font-weight:800}
+  h1 .role{background:linear-gradient(90deg,var(--acc),#a371f7);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{color:var(--mut);margin-top:14px;max-width:640px;font-size:17px}
+  .hero .ctas{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;
+    font-size:14px;font-weight:600;border:1px solid var(--line);color:var(--txt);transition:.18s}
+  .btn:hover{text-decoration:none;border-color:var(--acc);transform:translateY(-1px)}
+  .btn.pri{background:var(--acc);border-color:var(--acc);color:#04131f}
+  .btn.pri:hover{background:#79b8ff}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:40px 0 0}
+  .stat{background:var(--panel);padding:20px 22px}
+  .stat b{display:block;font-size:28px;letter-spacing:-.02em;color:var(--txt)}
+  .stat span{color:var(--mut);font-size:13px}
+
+  /* sections */
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--acc);margin-bottom:26px;font-family:var(--mono)}
+  h2 .n{color:var(--mut);margin-right:10px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:14px}
+  .card h3{font-size:17px;margin-bottom:6px}
+  .card .meta{color:var(--mut);font-size:13px;margin-bottom:10px}
+  ul{list-style:none}
+  .card li{padding-left:20px;position:relative;color:#c9d1d9;margin:7px 0;font-size:15px}
+  .card li::before{content:'▸';position:absolute;left:0;color:var(--acc)}
+
+  /* certs */
+  .certs{display:flex;flex-wrap:wrap;gap:10px}
+  .cert{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:14px}
+  .cert b{display:block;font-size:15px}
+  .cert span{color:var(--mut);font-size:12px}
+
+  /* writeups */
+  .wu{display:flex;justify-content:space-between;align-items:center;gap:16px;
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:14px 18px;margin-bottom:10px}
+  .wu b{font-size:15px}
+  .wu .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font:12px var(--mono);color:var(--mut);border:1px solid var(--line);
+    padding:2px 8px;border-radius:6px}
+
+  /* tools table */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line)}
+  th{color:var(--mut);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-family:var(--mono)}
+  td b{color:var(--txt)}
+  td{color:#c9d1d9}
+
+  /* contact */
+  #contact .big{font-size:22px;font-weight:700;margin-bottom:8px}
+  #contact .mail{font:18px var(--mono);color:var(--acc)}
+  footer{padding:34px 0;color:var(--mut);font-size:13px;display:flex;
+    justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media(max-width:720px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    h1{font-size:34px}
+    .wu{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="status"><span class="dot"></span>Open to remote pentest / red team roles</div>
+    <h1>Yelnur Abdikhaimov<br><span class="role">Penetration Tester</span></h1>
+    <p class="sub">Active Directory attacks, web exploitation and custom red-team tooling.
+      2.5+ years in cybersecurity, 16 authorized client engagements,
+      full AD domain compromise in 15 of 16 assessments.</p>
+    <div class="ctas">
+      <a class="btn pri" href="mailto:eabdikhaimov@gmail.com">Hire me</a>
+      <a class="btn" href="https://app.hackthebox.com/users/2367007" target="_blank">HTB Profile</a>
+      <a class="btn" href="https://github.com/y3g1" target="_blank">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/yelnur-abdikhaimov-0007b52b3" target="_blank">LinkedIn</a>
+    </div>
+ <div class="stats">
+      <div class="stat"><b>14/15</b><span>full AD domain compromise</span></div>
+      <div class="stat"><b>118+</b><span>findings (28 Critical / 49 High)</span></div>
+      <div class="stat"><b>20</b><span>HTB certs incl. CPTS &amp; CWES</span></div>
+      <div class="stat"><b>20+</b><span>custom Python attack tools</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="experience">
+  <div class="wrap">
+    <h2><span class="n">01</span>Experience</h2>
+    <div class="card">
+      <h3>Security Operations Center Analyst / Penetration Tester — Digital Qalqan</h3>
+      <div class="meta">Astana · May 2024 – Present</div>
+      <ul>
+        <li>16 authorized grey/black-box penetration tests (fintech, government, industrial) — full AD domain compromise in 15 engagements, from unprivileged VPN access to Domain Admin</li>
+        <li>118+ vulnerabilities documented: 28 Critical, 49 High (max CVSS 10.0), including full-domain chains via AD CS attacks (ESC6/ESC8, cert template abuse, Certighost CVE-2026-54121), Shadow Credentials, RBCD+S4U2Proxy, Kerberoasting, NTLM relay</li>
+        <li>EDR evasion in authorized tests: UPX-packed Mimikatz past Snort signatures, alternative LDAP tooling past Kaspersky DNS-signatures; honest stop conditions vs CrowdStrike</li>
+        <li>15 client-facing reports (up to 74 pages, TLP:RED): executive summary, MITRE ATT&CK kill chains, remediation roadmap; retest validation</li>
+        <li>Built 20+ custom Python attack tools with verifiable development history (GhostSPN full-chain automation CVE-2025-58726, DRSUAPI DCSync diagnostics, NBT-relay proxy, GPO DACL audit, lockout-aware password spray)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Cybersecurity Intern — KAP Technology LLP</h3>
+      <div class="meta">Mar – May 2024 · internal CTF platform on CTFd</div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap">
+    <h2><span class="n">02</span>Certifications</h2>
+    <div class="certs">
+      <div class="cert"><b>CPTS</b><span>HTB Certified Penetration Testing Specialist</span></div>
+      <div class="cert"><b>CWES</b><span>HTB Certified Web Exploitation Specialist · 100/100</span></div>
+        <div class="cert"><b>CRTeamer</b><span>Certified Red Team Analyst — SecOps Group</span></div>
+      <div class="cert"><b>7 × SecOps</b><span>Web-RTA · CAPen · CNPen · CAP · CCSP-AWS · CNSP · CBP</span></div>
+      <div class="cert"><b>CEH</b><span>Certified Ethical Hacker</span></div>
+      <div class="cert"><b>18 Pro Labs</b><span>HTB: Dante, POO, Hades, …</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="writeups">
+  <div class="wrap">
+    <h2><span class="n">03</span>Research &amp; Write-ups</h2>
+    <div class="wu">
+      <div><b>CraftCMS CVE-2026-79987 — RCE</b><div class="meta">Parameterized exploit, exact vulnerable range 5.9.0–5.10.12, docker lab + end-to-end PROOF</div></div>
+      <div class="tags"><span class="tag">CVE</span><span class="tag">RCE</span><span class="tag">PHP</span></div>
+    </div>
+    <div class="wu">
+      <div><b>SyncLAPS — LAPS password synchronization abuse</b><div class="meta">AD attack tooling, battle-tested on authorized engagements</div></div>
+      <div class="tags"><span class="tag">Active Directory</span><span class="tag">LAPS</span><span class="tag">Python</span></div>
+    </div>
+    <div class="wu">
+      <i>Write-ups for GhostSPN (CVE-2025-58726) and the NTLM-relay toolkit — after public repo release.</i>
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap">
+    <h2><span class="n">04</span>Tooling</h2>
+    <table>
+      <tr><th>Domain</th><th>What I use</th></tr>
+      <tr><td><b>Active Directory</b></td><td>BloodHound, Impacket, NetExec, Certipy, Mimikatz, ntlmrelayx, bloodyAD</td></tr>
+      <tr><td><b>Web</b></td><td>Burp Suite, Nmap, sqlmap, custom Python exploit skeletons</td></tr>
+      <tr><td><b>C2 / Red Team</b></td><td>AdaptixC2 (custom agents), MITRE ATT&CK, custom loaders (authorized labs)</td></tr>
+      <tr><td><b>Languages</b></td><td>Python, Bash · Kazakh/Russian native, English B2+/C1 tech</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2><span class="n">05</span>Contact</h2>
+    <p class="big">Looking for a remote pentest / red team role.</p>
+    <p><span class="mail">eabdikhaimov@gmail.com</span> · UTC+5, remote-friendly</p>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Yelnur Abdikhaimov</div>
+  <div>All engagements referenced were authorized under contract.</div>
+</footer>
+
+</body>
+</html>
